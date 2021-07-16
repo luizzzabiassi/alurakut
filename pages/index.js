@@ -16,7 +16,6 @@ function ProfileSidebar(propriedades){
         </a>
       </p>
       <hr/>
-
       <AlurakutProfileSidebarMenuDefault />
     </Box>
   )
@@ -47,8 +46,8 @@ function ProfileRelationsBox(propriedades){
 
 export default function Home(){
   const githubUser = 'luizzzabiassi';
-
   const [comunidades, setComunidades] = React.useState([]);
+
   // const comunidades = comunidades[0]
   // const alteradorDeComunidades/setComunidades = comunidades[1]
   // const comunidades = ['Alurakut'];
@@ -60,7 +59,7 @@ export default function Home(){
     'omariosouto', 
     'peas', 
     'rafaballerini', 
-    'marcobrunodev', 
+    'cardosovanessa',
     'felipefialho'
   ]
 
@@ -68,8 +67,8 @@ export default function Home(){
 
   React.useEffect(() => {
     fetch(`https://api.github.com/users/luizzzabiassi/followers`)
-    .then((respServidor) => respServidor.json())
-    .then((respCompleta) => setSeguidores(respCompleta))
+    .then(respServidor => respServidor.json())
+    .then(respCompleta => setSeguidores(respCompleta))
 
     fetch('https://graphql.datocms.com/', {
       method: 'POST',
@@ -89,8 +88,8 @@ export default function Home(){
         }`
       })
     })
-    .then((resp) => resp.json())
-    .then((respCompleta) => {
+    .then(resp => resp.json())
+    .then(respCompleta => {
       const comunidadesDato = respCompleta.data.allCommunities;
       console.log(comunidadesDato);
       setComunidades(comunidadesDato)
@@ -104,12 +103,12 @@ export default function Home(){
         <div className='profileArea' style={{gridArea: 'profileArea'}}>
           <ProfileSidebar githubUser={githubUser} />
         </div>
+
         <div className='welcomeArea' style={{gridArea: 'welcomeArea'}}>
           <Box>
             <h1 className='title'>
               Bem-Vindo(a)
             </h1>
-
             <OrkutNostalgicIconSet />
           </Box>
 
@@ -135,34 +134,39 @@ export default function Home(){
                 },
                 body: JSON.stringify(comunidade)
               })
-              .then(async (res) => {
+              .then(async res => {
                 const dados = await res.json();
                 console.log(dados.regCriado);
+
                 const comunidade = dados.regCriado;
                 const comunidadesAtualizadas = [...comunidades, comunidade];
+                
                 setComunidades(comunidadesAtualizadas)
               })
-
             }}>
               <div>
                 <input placeholder='Qual vai ser o nome da sua comunidade?' name='title' aria-label='Qual vai ser o nome da sua comunidade?' type='text'/>
               </div>
+
               <div>
                 <input placeholder='Coloque uma URL para usarmos de capa.' name='image' aria-label='Coloque uma URL para usarmos de capa.'/>
               </div>
+
               <button>Criar Comunidade</button>
             </form>
           </Box>
         </div>
+
         <div className='profileRelationsArea' style={{gridArea: 'profileRelationsArea'}}>
           <ProfileRelationsBox title='Seguidores' items={seguidores} />
+          
           <ProfileRelationsBoxWrapper>
             <h2 className='smallTitle'>
               Comunidades ({comunidades.length})
             </h2>
 
             <ul>
-              {comunidades.map((itemAtual) => {
+              {comunidades.map(itemAtual => {
                 return(
                   <li key={itemAtual.id}>
                     <a href={`/communities/${itemAtual.id}`}>
@@ -174,13 +178,14 @@ export default function Home(){
               })}
             </ul>
           </ProfileRelationsBoxWrapper>
+
           <ProfileRelationsBoxWrapper>
             <h2 className='smallTitle'>
               Pessoas da Comunidade ({pessoasFavoritas.length})
             </h2>
             
             <ul>
-              {pessoasFavoritas.map((itemAtual) => {
+              {pessoasFavoritas.map(itemAtual => {
                 return(
                   <li key={itemAtual}>
                     <a href={`/users/${itemAtual}`} >
