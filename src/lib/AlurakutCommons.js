@@ -1,7 +1,7 @@
 import React from 'react';
 import nookies from 'nookies';
 import router, { useRouter } from 'next/router';
-import styled, { css } from 'styled-components';
+import styled, { createGlobalStyle, css } from 'styled-components';
 import NextLink from 'next/link';
 
 const BASE_URL = 'http://alurakut.vercel.app/';
@@ -21,11 +21,19 @@ function Link({ href, children, ...props }) {
 // ================================================================================================================
 // Menu
 // ================================================================================================================
+
+const LockScroll = createGlobalStyle`
+  body {
+    overflow: hidden;
+  }
+`;
+
 export function AlurakutMenu({ githubUser }) {
   const router = useRouter();
   const [isMenuOpen, setMenuState] = React.useState(false);
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
+      {isMenuOpen && <LockScroll />}
       <div className="container">
         <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
 
@@ -59,6 +67,7 @@ AlurakutMenu.Wrapper = styled.header`
   width: 100%;
   background-color: #308BC5;
   .alurakutMenuProfileSidebar {
+    overflow-y: scroll;
     background: white;
     position: fixed;
     z-index: 100;

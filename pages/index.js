@@ -31,16 +31,16 @@ function ProfileRelationsBox(propriedades){
       </h2>
 
       <ul>
-        {/*seguidores.map((itemAtual) => {
+        {propriedades.items.map(itemAtual => {
           return(
-            <li key={itemAtual}>
-              <a href={`https://github.com/${itemAtual}.png`}>
-                <img src={itemAtual.image} />
-                <span>{itemAtual.title}</span>
+            <li key={itemAtual.id}>
+              <a href={`https://github.com/${itemAtual.login}`}>
+                <img src={itemAtual.avatar_url} />
+                <span>{itemAtual.login}</span>
               </a>
             </li>
           )
-        })*/}
+        })}
       </ul>
     </ProfileRelationsBoxWrapper>
   )
@@ -68,7 +68,7 @@ export default function Home(props){
   const [seguidores, setSeguidores] = React.useState([]);
 
   React.useEffect(() => {
-    fetch(`https://api.github.com/users/luizzzabiassi/followers`)
+    fetch(`https://api.github.com/users/${githubUser}/followers`)
     .then(respServidor => respServidor.json())
     .then(respCompleta => setSeguidores(respCompleta))
 
