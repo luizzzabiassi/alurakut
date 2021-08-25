@@ -21,8 +21,8 @@ const GlobalStyle = createGlobalStyle`
 
   img{
     max-width: 100%;
-    heigth: auto;
-    dislay: block;
+    height: auto;
+    display: block;
   }
 
   ${AlurakutStyles}
